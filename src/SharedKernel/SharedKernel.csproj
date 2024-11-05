@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<AssemblyName>Lia.$(MSBuildProjectName)</AssemblyName>
+		<RootNamespace>Lia.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	</PropertyGroup>
+
+
+	<ItemGroup>
+		<PackageReference Include="Ardalis.Specification" Version="8.0.0" />
+	</ItemGroup>
+	
+</Project>

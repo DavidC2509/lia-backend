@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<AssemblyName>Lia.$(MSBuildProjectName)</AssemblyName>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<RootNamespace>Lia.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+	  <ProjectReference Include="..\LiaBackend.ServiceDefaults\LiaBackend.ServiceDefaults.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="ClosedXML" Version="0.102.2" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+	</ItemGroup>
+</Project>

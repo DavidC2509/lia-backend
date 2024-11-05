@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<AssemblyName>Lia.$(MSBuildProjectName)</AssemblyName>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<RootNamespace>Lia.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
+	</ItemGroup>
+
+</Project>
