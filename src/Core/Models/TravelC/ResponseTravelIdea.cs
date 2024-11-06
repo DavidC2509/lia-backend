@@ -38,7 +38,7 @@
             public bool UserB2c { get; set; }
             public CountersData Counters { get; set; }
 
-            public Idea()
+            public IdeaData()
             {
                 User = string.Empty;
                 Email = string.Empty;
