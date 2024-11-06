@@ -22,7 +22,7 @@ namespace Lia.Api.Extensions
             // Configurar HttpClient con un nombre específico sin BaseAddress
             services.AddHttpClient();
             services.Configure<ConectToLiaSettings>(configuration.GetSection("ApiLia"));
-
+            services.Configure<ConnectToTravelCSettings>(configuration.GetSection("ApiTravelCSettings"));
             return services;
         }
     }
