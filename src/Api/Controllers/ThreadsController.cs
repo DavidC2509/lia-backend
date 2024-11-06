@@ -8,7 +8,7 @@ using System.Net.Mime;
 namespace Lia.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api")]
     public class ThreadsController : ControllerBase
     {
         private readonly IVirtualAssistant _serviceVirtualAssistan;
@@ -33,7 +33,7 @@ namespace Lia.Api.Controllers
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(ResponseAddMessageThreads), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<ResponseAddMessageThreads>> AddMessageThreads([FromBody] AddMesaggeThreads data, [FromQuery] string id, CancellationToken cancellationToken = default)
+        public async Task<ActionResult<ResponseAddMessageThreads>> AddMessageThreads([FromBody] AddMesaggeThreads data, [FromRoute] string id, CancellationToken cancellationToken = default)
         {
             return await _serviceVirtualAssistan.AddMessageThreads(data, id, cancellationToken);
         }
@@ -43,7 +43,7 @@ namespace Lia.Api.Controllers
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(ResponseRunThreads), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<ResponseRunThreads>> RunThreads([FromQuery] string id, CancellationToken cancellationToken = default)
+        public async Task<ActionResult<ResponseRunThreads>> RunThreads([FromRoute] string id, CancellationToken cancellationToken = default)
         {
             return await _serviceVirtualAssistan.RunAssistanThreads(id, cancellationToken);
         }
@@ -53,7 +53,7 @@ namespace Lia.Api.Controllers
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(ResponseRunThreads), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<ResponseRunThreads>> RetriveRunThreads([FromQuery] string idThread, [FromQuery] string idRun, CancellationToken cancellationToken = default)
+        public async Task<ActionResult<ResponseRunThreads>> RetriveRunThreads([FromRoute] string idThread, [FromRoute] string idRun, CancellationToken cancellationToken = default)
         {
             return await _serviceVirtualAssistan.RetriveRunAssistanThreads(idThread, idRun, cancellationToken);
         }
@@ -63,7 +63,7 @@ namespace Lia.Api.Controllers
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(ResponseGetMessageThreads), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<ResponseGetMessageThreads>> GetMessages([FromQuery] string idThread, CancellationToken cancellationToken = default)
+        public async Task<ActionResult<ResponseGetMessageThreads>> GetMessages([FromRoute] string idThread, CancellationToken cancellationToken = default)
         {
             return await _serviceVirtualAssistan.GetMessageThread(idThread, cancellationToken);
         }
