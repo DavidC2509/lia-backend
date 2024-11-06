@@ -70,6 +70,11 @@ namespace Lia.Infrastructure
                  .As<IVirtualAssistant>()
                  .InstancePerLifetimeScope();
 
+            builder.RegisterType<TravelCService>()
+              .As<ITravelCServices>()
+              .InstancePerLifetimeScope();
+
+
 
             // Registra un ServiceFactory para resolver tipos desde el contenedor.
             builder.Register<Func<Type, object>>(context =>
