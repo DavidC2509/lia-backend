@@ -52,6 +52,26 @@ namespace Lia.SharedKernel.Utils
             return client;
         }
 
+        // Método para agregar contenido MultipartFormDataContent
+        public static HttpRequestMessage AddFormData(this HttpRequestMessage request, Dictionary<string, string> fields, StreamContent fileContent, string fileName, string fileFieldName = "file")
+        {
+            var formData = new MultipartFormDataContent();
+
+            // Agrega los campos adicionales al formulario
+            foreach (var field in fields)
+            {
+                formData.Add(new StringContent(field.Value), field.Key);
+            }
+
+            // Agrega el archivo al formulario
+            formData.Add(fileContent, fileFieldName, fileName);
+
+            // Asigna el contenido al request
+            request.Content = formData;
+
+            return request;
+        }
+
         public static async Task<Result> SendConvertData<Result>(this HttpClient client, HttpRequestMessage request, CancellationToken cancellationToken)
         {
             var response = await client.SendAsync(request, cancellationToken);

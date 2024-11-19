@@ -29,7 +29,7 @@ namespace Lia.Infrastructure.Interface
                     MicrositeId = _apiSettings.MicrositeId,
                 };
 
-                var request = DataUtils.CreateHtpRequest(HttpMethod.Post, authRequest, _apiSettings.TravelCEndpoint + "authenticate");
+                var request = DataUtils.CreateHtpRequest(HttpMethod.Post, authRequest, _apiSettings.TravelCEndpoint + "authentication/authenticate");
                 var token = await _httpClient.SendConvertData<AuthResponse>(request, cancellationToken);
                 return token.Token;
             }

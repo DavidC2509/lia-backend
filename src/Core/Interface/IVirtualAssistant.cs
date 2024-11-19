@@ -1,4 +1,5 @@
-﻿using Lia.Core.Models.Threads;
+﻿using Lia.Core.Models.OpenIa;
+using Lia.Core.Models.Threads;
 
 namespace Lia.Core.Interface
 {
@@ -9,6 +10,10 @@ namespace Lia.Core.Interface
         Task<ResponseRunThreads> RunAssistanThreads(string threadId, CancellationToken cancellationToken);
         Task<ResponseRunThreads> RetriveRunAssistanThreads(string threadId, string runId, CancellationToken cancellationToken);
         Task<ResponseGetMessageThreads> GetMessageThread(string threadId, CancellationToken cancellationToken);
+        Task<ListFilesOpenIA> GetListFiles(CancellationToken cancellationToken);
+        //Task<FileContentResult> GetFileConten(CancellationToken cancellationToken);
+        Task<ResponeAddFileOpenIa> AddFileContent(StreamContent file, string fileName, CancellationToken cancellationToken);
+        Task<ResponeAddFileOpenIa> DynamycPromt(List<MessagesOutput> data, string filename, CancellationToken cancellationToken);
 
     }
 }
