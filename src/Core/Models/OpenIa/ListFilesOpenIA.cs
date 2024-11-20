@@ -2,11 +2,11 @@
 {
     public class ListFilesOpenIA
     {
-        public ListFilesOpenIAData Data { get; set; }
+        public List<ListFilesOpenIAData> Data { get; set; }
 
         public ListFilesOpenIA()
         {
-            Data = new ListFilesOpenIAData();
+            Data = new List<ListFilesOpenIAData>();
         }
 
         public class ListFilesOpenIAData
