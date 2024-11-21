@@ -17,7 +17,7 @@ Pasos
 ## Migracion Base de datos
 
 Add Migration
-	*cd .\src\Template\Command*
+	*cd .\src\Infrastructure*
 	*dotnet ef --startup-project ..\Api\ -v migrations add "InitalLia"*
 
 

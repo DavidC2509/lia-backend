@@ -1,12 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Lia.SharedKernel;
+using Lia.SharedKernel.Interface;
 
 namespace Lia.Core.PromDinamicAggregate
 {
-    internal class PromDinamyc
+    public class PromDinamyc : BaseEntity, IAggregateRoot
     {
+        //Code Plan de Pago
+        public string NameEvent { get; set; }
+        public DateTime DateEvent { get; set; }
+        public string CityEvent { get; set; }
+        public string AddresEvent { get; set; }
+        public string AdditionalInformation { get; set; }
+
+        public PromDinamyc()
+        {
+            NameEvent = string.Empty;
+            CityEvent = string.Empty;
+            AdditionalInformation = string.Empty;
+            AddresEvent = string.Empty;
+        }
     }
 }

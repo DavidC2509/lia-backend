@@ -1,6 +1,6 @@
 ﻿using Autofac;
-using Lia.Core.DataAggregate;
 using Lia.Core.Interface;
+using Lia.Core.PromAggregate;
 using Lia.Infrastructure.Data;
 using Lia.Infrastructure.Interface;
 using Lia.SharedKernel.Interface;
@@ -21,7 +21,7 @@ namespace Lia.Infrastructure
             _isDevelopment = isDevelopment;
             // Obtiene referencias a los ensamblados de la aplicación.
             var coreAssembly =
-              Assembly.GetAssembly(typeof(DataAggregate));
+              Assembly.GetAssembly(typeof(Prom));
 
 
             var infrastructureAssembly = Assembly.GetAssembly(typeof(StartupSetup));

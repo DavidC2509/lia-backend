@@ -15,10 +15,6 @@
 	  <ProjectReference Include="..\Core\Core.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Data\Configuration\" />
-	</ItemGroup>
-
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />

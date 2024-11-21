@@ -1,3 +1,6 @@
+using LiaBackend.AppHost.Extension;
+using Projects;
+
 var builder = DistributedApplication.CreateBuilder(args);
 
 #region Postbres Db
@@ -10,9 +13,9 @@ var postgresDbNext = builder.ExecutionContext.IsRunMode ? serverPotgsres
 
 #endregion
 
-//builder.AddProject<DatabaseMigration>("lia-database-migration")
-//    .WithReference(postgresDbNext).WaitFor(postgresDbNext);
+builder.AddProject<DatabaseMigration>("lia-database-migration")
+   .WithReference(postgresDbNext).WaitFor(postgresDbNext);
 
-builder.AddProject<Projects.Api>("api-lia");
+builder.AddProject<Api>("api-lia").WithReference(postgresDbNext);
 
 builder.Build().Run();
