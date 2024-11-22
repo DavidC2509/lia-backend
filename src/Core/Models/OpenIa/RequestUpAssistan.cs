@@ -17,10 +17,14 @@
             Tools = new List<RequestUpAssistanTool>();
             Model = "gpt-4o-mini";
         }
-        public RequestUpAssistan(string name, string instructions) : this()
+
+        public RequestUpAssistan(string name, string instructions, string model, string typeTools) : this()
         {
             Instructions = instructions;
             Name = name;
+            Model = model;
+            var tools = new RequestUpAssistanTool(typeTools);
+            Tools.Add(tools);
         }
 
         public class RequestUpAssistanTool
@@ -30,6 +34,11 @@
             public RequestUpAssistanTool()
             {
                 Type = "code_interpreter";
+            }
+
+            public RequestUpAssistanTool(string type)
+            {
+                Type = type;
             }
         }
     }

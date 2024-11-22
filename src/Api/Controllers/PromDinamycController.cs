@@ -1,4 +1,6 @@
 ﻿using Lia.Api.ModelsEntry;
+using Lia.Core.Interface;
+using Lia.Core.Models.OpenIa;
 using Lia.Core.PromAggregate;
 using Lia.Core.PromDinamicAggregate;
 using Lia.SharedKernel.Interface;
@@ -15,11 +17,13 @@ namespace Lia.Api.Controllers
     {
         private readonly IRepository<PromDinamyc> _repository;
         private readonly IReadRepository<Prom> _repositoryProm;
+        private readonly IVirtualAssistant _serviceVirtualAssistan;
 
-        public PromDinamycController(IRepository<PromDinamyc> repository, IReadRepository<Prom> repositoryProm)
+        public PromDinamycController(IRepository<PromDinamyc> repository, IReadRepository<Prom> repositoryProm, IVirtualAssistant serviceVirtualAssistan)
         {
             _repository = repository;
             _repositoryProm = repositoryProm;
+            _serviceVirtualAssistan = serviceVirtualAssistan;
         }
 
         [HttpGet("get-list")]
@@ -39,18 +43,18 @@ namespace Lia.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult<PromDinamyc>> CreatePromDinamyc([FromBody] CreatePromDinamycModel data, CancellationToken cancellationToken = default)
         {
-            var promDinamyc = new PromDinamyc(data.NameEvent, data.DateEvent, data.CityEvent, data.AddresEvent, data.AdditionalInformation);
+            var promDinamyc = new PromDinamyc(data.NameEvent, data.DateEvent, data.CityEvent, data.AddresEvent, data.AdditionalInformation, data.NameClient, data.PackageTitle, data.CountNigthsHotel, data.Vigency);
             await _repository.AddAsync(promDinamyc, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
             return Ok(promDinamyc);
         }
 
-        [HttpPost("{id}/create-prom")]
+        [HttpPost("{idPromDinamyc}/create-prom")]
         [SwaggerOperation(OperationId = "CreatePromFromPromDinamyc", Tags = new[] { "PromDinamyc" })]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(PromDinamyc), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<PromDinamyc>> CreatePromFromPromDinamyc([FromRoute] string idPromDinamyc, [FromBody] CreatePromFromDinamyc data, CancellationToken cancellationToken = default)
+        public async Task<ActionResult<PromDinamyc>> CreatePromFromPromDinamyc([FromRoute] Guid idPromDinamyc, [FromBody] CreatePromFromDinamyc data, CancellationToken cancellationToken = default)
         {
             var prom = await _repositoryProm.GetByIdAsync(data.PromID);
             var promDinamyc = await _repository.GetByIdAsync(idPromDinamyc);
@@ -61,16 +65,17 @@ namespace Lia.Api.Controllers
             return Ok(promDinamyc);
         }
 
-        [HttpPost("{id}/up-assistan")]
+        [HttpPost("{idPromDinamyc}/up-assistan")]
         [SwaggerOperation(OperationId = "PromDinamycUpToAssistan", Tags = new[] { "PromDinamyc" })]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(PromDinamyc), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<bool>> PromDinamycUpToAssistan([FromRoute] string idPromDinamyc, [FromBody] string nameAssistan, CancellationToken cancellationToken = default)
+        public async Task<ActionResult<ResponseStoreAssistanIa>> PromDinamycUpToAssistan([FromRoute] Guid idPromDinamyc, [FromBody] UpAssistantProm data, CancellationToken cancellationToken = default)
         {
             var prom = await _repository.GetByIdAsync(idPromDinamyc);
-
-            return Ok(true);
+            if (string.IsNullOrEmpty(prom?.PromModified)) return BadRequest("Need Text PromDinamyc");
+            var request = new RequestUpAssistan(data.NameFile, prom.PromModified, data.ModelIa, data.ToolsIa);
+            return await _serviceVirtualAssistan.UpAssistan(request, cancellationToken);
         }
 
         public static string ReplacePlaceholders(Prom prom, PromDinamyc promDinamyc)
@@ -79,7 +84,12 @@ namespace Lia.Api.Controllers
                    .Replace("{Nombre_Evento}", promDinamyc.NameEvent)
                    .Replace("{Ciudad_Evento}", promDinamyc.CityEvent)
                    .Replace("{Ubicacion_Evento}", promDinamyc.AddresEvent)
-                   .Replace("{Informacion_Adicional}", promDinamyc.AdditionalInformation);
+                   .Replace("{Informacion_Adicional}", promDinamyc.AdditionalInformation)
+                   .Replace("{Nombre_Cliente}", promDinamyc.NameClient)
+                   .Replace("{TITULO_DEL_PAQUETE}", promDinamyc.PackageTitle)
+                   .Replace("{Cant_Noches_Hotel}", promDinamyc.CountNigthsHotel.ToString())
+                   .Replace("{Vigencia}", promDinamyc.Vigency);
+
         }
     }
 }

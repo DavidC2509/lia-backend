@@ -102,6 +102,7 @@ namespace Lia.Infrastructure.Interface
 
         public async Task<ResponseStoreAssistanIa> UpAssistan(RequestUpAssistan data, CancellationToken cancellationToken)
         {
+            AddHeader();
             var request = DataUtils.CreateHtpRequest(HttpMethod.Post, data, _apiSettings.APIUrl + "assistants");
             return await _httpClient.SendConvertData<ResponseStoreAssistanIa>(request, cancellationToken);
         }
