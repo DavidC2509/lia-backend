@@ -14,6 +14,7 @@ namespace Lia.Core.Interface
         //Task<FileContentResult> GetFileConten(CancellationToken cancellationToken);
         Task<ResponeAddFileOpenIa> AddFileContent(StreamContent file, string fileName, CancellationToken cancellationToken);
         Task<ResponeAddFileOpenIa> DynamycPromt(List<MessagesOutput> data, string filename, CancellationToken cancellationToken);
+        Task<ResponseStoreAssistanIa> UpAssistan(RequestUpAssistan data, CancellationToken cancellationToken);
 
     }
 }

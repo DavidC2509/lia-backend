@@ -100,6 +100,11 @@ namespace Lia.Infrastructure.Interface
             return await _httpClient.SendConvertData<ResponeAddFileOpenIa>(request, cancellationToken);
         }
 
+        public async Task<ResponseStoreAssistanIa> UpAssistan(RequestUpAssistan data, CancellationToken cancellationToken)
+        {
+            var request = DataUtils.CreateHtpRequest(HttpMethod.Post, data, _apiSettings.APIUrl + "assistants");
+            return await _httpClient.SendConvertData<ResponseStoreAssistanIa>(request, cancellationToken);
+        }
 
         public static StreamContent SaveAsJsonlToStream(List<MessagesOutput> messagesOutput)
         {

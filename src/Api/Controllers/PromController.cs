@@ -27,5 +27,18 @@ namespace Lia.Api.Controllers
         {
             return await _repository.ListAsync(cancellationToken);
         }
+
+        [HttpPost("create")]
+        [SwaggerOperation(OperationId = "CreateProm", Tags = new[] { "Prom" })]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(Prom), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        public async Task<ActionResult<Prom>> CreateProm([FromBody] string promt, CancellationToken cancellationToken = default)
+        {
+            var prom = new Prom(promt);
+            await _repository.AddAsync(prom, cancellationToken);
+            await _repository.SaveChangesAsync(cancellationToken);
+            return Ok(prom);
+        }
     }
 }
